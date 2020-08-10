@@ -36,3 +36,202 @@
     transform: rotate(360deg);
   }
 }
+
+/* ------------------------------------ */
+.App {
+	min-height: 100vh;
+	background-image: url(https://wallpaperaccess.com/full/2629319.png);
+	background-size: cover;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.Weather {
+	margin: 30px;
+	border-radius: 32px;
+	box-shadow: 0 0 16px rgba(0,0,0,.5);
+}
+
+
+/* --------------Current--------------------------------*/
+.Current{
+	position: relative;
+	display: flex;
+	padding: 64px 0;
+	background-image: url(https://i.imgur.com/GhQZhaO.jpg);
+	background-size: cover;
+	color: white;
+	border-top-left-radius: 32px;
+	border-top-right-radius: 32px;
+}
+
+.loading{
+	flex: 1 1;
+	text-align: center;
+	font-size: 3rem;
+	padding: 88px 0;
+}
+
+.CurrentInfo{
+	padding: 0 96px;
+  	display: flex;
+	flex-direction: column;
+	color: hsla(0,0%,100%,.7);
+}
+
+.CurrentInfo__temperature{
+	font-size: 5rem;
+	color: white;
+}
+
+.CurrentInfo__weather{
+	font-size: 1.5rem;
+	letter-spacing: 5px;
+	margin-top: 0.25rem;
+}
+
+.CurrentInfo__weather span{
+	color: hsla(0,0%,100%,.7);
+}
+
+.CurrentInfo__details{
+	display: flex;
+	text-align: center;
+	justify-content: space-between;
+	margin-top: 3rem;
+}
+
+.CurrentInfo__details__item{
+	display: flex;
+	flex-direction: column;
+}
+
+.division{
+	width: 3px;
+	background-color: rgba(255, 255, 255, 0.7);
+}
+
+.City{
+	padding: 0 96px;
+	padding-top: 16px;
+}
+
+.City h1 {
+	font-weight: 500;
+	margin: 0;
+}
+
+.City h1:after{
+	content: '';
+	background-color: white;
+	display: block;
+	width: 50%;
+	height: 3px;
+	transform: translateX(50%);
+	margin-top: 1rem;
+	border-radius: 2px;
+}
+
+.CurrentBottom{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 1.5rem;
+	background-color: rgba(0,0,0,.5);
+}
+
+/* --------------bottom -------------------------*/
+
+.WeatherBottom{
+	display: flex;
+	padding: 36px 0;
+	background-color: white;
+	flex: 1 1;
+	border-bottom-left-radius: 32px;
+	border-bottom-right-radius: 32px;
+}
+
+.WeatherBottom .division{
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.OtherCity__title, .ForecastWeather__title{
+	margin: 0;
+	margin-bottom: 1rem;
+    letter-spacing: 2px;
+    font-weight: 300;
+	font-size: 1.5rem;
+	/* flex: auto; */
+}
+
+.OtherCityButton__temperature, .ForecastList__Item__temperature{
+	font-size: 1.25rem;
+    color: rgba(0,0,0,.5);
+}
+
+/* -----------bottom other cities---------------- */
+.OtherCity{
+	display: flex;
+	flex-direction: column;
+	padding: 0 48px;
+	font-size: 1.5rem;
+}
+
+
+.OtherCityButton{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border: 0;
+	background: transparent;
+	text-align: left;
+	padding: 0;
+	cursor: pointer;
+}
+
+.OtherCityButton__city{
+	font-weight: 400;
+    width: 120px;
+    letter-spacing: 1px;
+    margin: 0;
+	font-size: 1rem;
+}
+
+
+.OtherCityButton__icon{
+	margin-left: 1rem;
+}
+
+/* -----------bottom forecast weather---------------- */
+.ForecastWeather{
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+	padding: 0 48px;
+}
+
+.ForecastList{
+	display: flex;
+	flex-direction: row;
+}
+
+.ForecastList__Item{
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.ForecastList__Item__day{
+	margin: 1rem 0;
+	font-weight: 400;
+    font-size: 1rem;
+}
+
+.ForecastList__Item__icon{
+	width: 70px;
+}
+
+.ForecastList__Item__temperature{
+	margin-top: 1rem;
+}
