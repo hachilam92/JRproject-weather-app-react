@@ -4,7 +4,7 @@ import '../App.css';
 import Current from './components/Current/Current';
 import WeatherBottom from './components/WeatherBottom/WeatherBottom';
 import getWeather from './api/getWeather';
-
+require('dotenv').config();
 /* hierarchy
 weather
 |-current
@@ -68,20 +68,27 @@ const otherCity = [
 
 // icon image:http://openweathermap.org/img/wn/<icon-code>@2x.png
 
-
-
-
-
-// function buildForecast (forecast) {
-// 	const dayList = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-// 	let forecastList = [];
-// 	let firstDay = new Date.getDay();
-// 	forecastList.push({
-// 		day : new ,
-// 		temperature : 14,
-// 		icon : '11d'
-// 	});
-// }
+function buildForecast (forecast) {
+	const dayList = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+	const today = new Date;
+	let forecastList = [];
+	let currentIndex = today.getDay();
+	forecastList.push({
+		day : dayList[currentIndex],
+		temperature : forecast[0].temperature,
+		icon : forecast[0].icon
+	});
+	for (let i = 1; i < 5; i++) {
+		currentIndex = (currentIndex === dayList.length -1)? 0 : currentIndex + 1;
+		forecastList.push({
+			day : dayList[currentIndex],
+			temperature : forecast[i].temperature,
+			icon : forecast[i].icon
+		});
+	}
+	console.log(`forecastList = ${forecastList}`);
+	return forecastList;
+}
 
 
 class Weather extends Component {
@@ -113,9 +120,10 @@ class Weather extends Component {
 
 
 	render () {
-		const {city, data, loading} = this.state;
+		const {city, data} = this.state;
 		let currentWeather;
-		// let forecastWeather;
+		let forecastWeather;
+		const loading = true;
 		// let otherCity;
 		
 		if(data) {
@@ -123,6 +131,7 @@ class Weather extends Component {
 				city : city,
 				...data.current
 			};
+			forecastWeather = buildForecast(data.forecast);
 		}
 
 		return (
@@ -132,11 +141,14 @@ class Weather extends Component {
 						<div className = 'loading'>
 							Loading...
 						</div>
+						<div className = 'WeatherBottom'></div>
 					</div>
 				:
-					<Current current = {currentWeather}/>
+					<div>
+						<Current current = {currentWeather}/>
+						<WeatherBottom cityArray = {otherCity} forecastArray = {forecastWeather}/>
+					</div>
 				}
-				<WeatherBottom cityArray = {otherCity} forecastArray = {forecastWeather}/>
 			</div>
 		);
 	}
