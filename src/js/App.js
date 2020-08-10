@@ -19,34 +19,6 @@ weather
 */
 
 
-const forecastWeather = [
-	{
-		day : 'MON',
-		icon : '11d',
-		temperature : 9
-	},
-	{
-		day : 'MON',
-		icon : '11d',
-		temperature : 9
-	},
-	{
-		day : 'MON',
-		icon : '11d',
-		temperature : 9
-	},
-	{
-		day : 'MON',
-		icon : '11d',
-		temperature : 9
-	},
-	{
-		day : 'MON',
-		icon : '11d',
-		temperature : 9
-	}
-];
-
 const otherCity = [
 	{
 		city : 'Perth',
@@ -66,31 +38,6 @@ const otherCity = [
 ];
 
 
-// icon image:http://openweathermap.org/img/wn/<icon-code>@2x.png
-
-function buildForecast (forecast) {
-	const dayList = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-	const today = new Date;
-	let forecastList = [];
-	let currentIndex = today.getDay();
-	forecastList.push({
-		day : dayList[currentIndex],
-		temperature : forecast[0].temperature,
-		icon : forecast[0].icon
-	});
-	for (let i = 1; i < 5; i++) {
-		currentIndex = (currentIndex === dayList.length -1)? 0 : currentIndex + 1;
-		forecastList.push({
-			day : dayList[currentIndex],
-			temperature : forecast[i].temperature,
-			icon : forecast[i].icon
-		});
-	}
-	console.log(`forecastList = ${forecastList}`);
-	return forecastList;
-}
-
-
 class Weather extends Component {
 	constructor (props) {
 		super(props);
@@ -100,6 +47,19 @@ class Weather extends Component {
 			data : null,
 			loading : true,
 		};
+		this.onCityChange = this.onCityChange.bind(this);
+		this.requestWeather = this.requestWeather.bind(this);
+	}
+
+	async onCityChange(inputCity) {
+		if(inputCity !== this.state.city){
+			const data = await getWeather(this.state.country, inputCity);
+			const newCity = data.cityName;
+			this.setState({
+				city: newCity,
+				data: data 
+			});
+		}
 	}
 
 	async requestWeather () {
@@ -118,12 +78,13 @@ class Weather extends Component {
 		this.requestWeather();
 	}
 
-
 	render () {
-		const {city, data} = this.state;
+		const loadingStyle = {
+			borderRadius : '32px',
+		};
+		const {city, data, loading} = this.state;
 		let currentWeather;
 		let forecastWeather;
-		const loading = true;
 		// let otherCity;
 		
 		if(data) {
@@ -131,21 +92,22 @@ class Weather extends Component {
 				city : city,
 				...data.current
 			};
-			forecastWeather = buildForecast(data.forecast);
+			forecastWeather = data.forecast;
 		}
 
 		return (
 			<div className = 'Weather'>
 				{loading?
-					<div className = 'Current'>
+					<div className = 'Current' style = {loadingStyle}>
 						<div className = 'loading'>
 							Loading...
 						</div>
-						<div className = 'WeatherBottom'></div>
 					</div>
 				:
 					<div>
-						<Current current = {currentWeather}/>
+						<Current 	current = {currentWeather}
+									onCityChange = {this.onCityChange}
+						/>
 						<WeatherBottom cityArray = {otherCity} forecastArray = {forecastWeather}/>
 					</div>
 				}

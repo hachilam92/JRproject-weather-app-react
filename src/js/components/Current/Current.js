@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {Component} from 'react';
 
 function CurrentInfo (props) {
 	return (
@@ -27,12 +27,55 @@ function CurrentInfo (props) {
 	);
 }
 
-function CurrentCity (props) {
-	return (
-		<div className = 'City'>
-			<h1>{props.city}</h1>	
-		</div>
-	);
+// function CurrentCity (props) {
+
+// 	return (
+// 		<div className = 'City'>
+// 			<h1>{props.city}</h1>	
+// 		</div>
+// 		<fieldset>
+// 			<input  value='Which city?'
+// 					onChange=
+// 			/>
+// 		</fieldset>
+// 	);
+// }
+
+class CurrentCity extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			value : 'Which city?'
+		};
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	handleChange(e) {
+		this.setState({
+			value: e.target.value
+		});
+	}
+
+	handleSubmit(e) {
+		e.preventDefault();
+		this.props.onCityChange(this.state.value);
+		console.log('submit');
+		console.log(this.state.value);
+	}
+
+	render() {
+		return (
+			<div className = 'City'>
+				<h1>{this.props.city}</h1>
+				<form onSubmit={this.handleSubmit}>
+					<input  value={this.state.value}
+							onChange={this.handleChange}
+					/>
+				</form>	
+			</div>
+		);
+	}
 }
 
 function Current (props) {
@@ -46,7 +89,9 @@ function Current (props) {
 	return (
 		<div className = 'Current'>
 			<CurrentInfo info = {info}/>
-			<CurrentCity city = {info.city}/>
+			<CurrentCity 	city = {info.city}
+							onCityChange = {props.onCityChange}
+			/>
 			<div className = 'CurrentBottom'></div>
 		</div>
 	);
