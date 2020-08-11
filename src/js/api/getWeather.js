@@ -33,10 +33,7 @@ function getWeather (country, city) {
         const rawForecast = forRes.data.list.map(item => new Weather(item));
         const filteredForecast = filterRawForecast(rawForecast);
         const forecast = formatForecast(filteredForecast);
-        
         const data = {cityName, current, forecast};
-        console.log(cityName);
-        console.log(data);
         return data;
     })
     .catch(err => {
@@ -65,7 +62,8 @@ function formatForecast (filteredForecast, days = 5) {
 		formattedForecast.push({
 			day : dayList[currentIndex],
 			temperature : Math.round(filteredForecast[i].temperature),
-			icon : filteredForecast[i].icon
+            icon : filteredForecast[i].icon,
+            description : filteredForecast[i].description
 		});
 	}
 	return formattedForecast;

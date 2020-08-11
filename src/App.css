@@ -189,9 +189,12 @@
 
 .OtherCityButton__temperature, .ForecastList__Item__temperature{
 	font-size: 1.25rem;
-    color: rgba(0,0,0,.5);
+	color: rgba(0,0,0,.5);
 }
-
+.OtherCityButton__icon, .ForecastList__Item__icon{
+	background-color: rgb(197, 193, 193);
+	border-radius: 50%;
+}
 /* -----------bottom other cities---------------- */
 .OtherCity{
 	display: flex;
@@ -204,11 +207,11 @@
 .OtherCityButton{
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: space-around;
 	border: 0;
 	background: transparent;
 	text-align: left;
-	padding: 0;
+	padding: 0.4rem 0;
 	cursor: pointer;
 }
 
@@ -220,9 +223,16 @@
 	font-size: 1rem;
 }
 
+.OtherCityButton__temperature{
+	width: 40px;
+}
 
 .OtherCityButton__icon{
 	margin-left: 1rem;
+}
+
+.OtherCityButton__icon img{
+	width: 35px;
 }
 
 /* -----------bottom forecast weather---------------- */
@@ -242,6 +252,7 @@
 	display: flex;
 	flex-direction: column;
 	text-align: center;
+	padding: 0 0.7rem;
 }
 
 .ForecastList__Item__day{
@@ -251,7 +262,7 @@
 }
 
 .ForecastList__Item__icon{
-	width: 70px;
+	width: 50px;
 }
 
 .ForecastList__Item__temperature{

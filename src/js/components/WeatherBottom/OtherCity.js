@@ -5,13 +5,13 @@ function OtherCityButton (props) {
     return (
         <button className = 'OtherCityButton'>
             <h3 className = 'OtherCityButton__city'>
-                {props.info.city}
+                {props.city}
             </h3>
             <div className = 'OtherCityButton__temperature'>
-                {props.info.temperature} °
+                {Math.round(props.info.temperature)} °
             </div>
             <div className = 'OtherCityButton__icon'>
-                <img src ={iconUrlAddress} alt = '{props.info.icon}'/>
+                <img src ={iconUrlAddress} alt = {props.info.description}/>
             </div>
         </button>
     );
@@ -19,8 +19,11 @@ function OtherCityButton (props) {
 
 function OtherCityButtons (props) {
     const cities = props.cityArray;
-    const buttons = cities.map((item) => 
-        <OtherCityButton key ={item.city} info = {item}/>
+    const buttons = cities.map((city) => 
+        <OtherCityButton    key = {city.cityName}
+                            info = {city.current}
+                            city = {city.cityName}  
+         />
     );
     return (
         <div className = 'OtherCityButtons'>
