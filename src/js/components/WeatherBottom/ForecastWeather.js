@@ -16,7 +16,7 @@ function ForecastListItem (props) {
 
 function ForecastList (props) {
     const forecastList = props.forecastArray.map((forecast) =>
-        <ForecastListItem info = {forecast}/>
+        <ForecastListItem key ={forecast.day} info = {forecast}/>
     );
     return (
         <div className = 'ForecastList'>

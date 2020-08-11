@@ -135,6 +135,25 @@
 	border-radius: 2px;
 }
 
+.City__form{
+	position: relative;
+	margin: 0;
+	padding: 0;
+	margin-top: 80px;
+	text-align: center;
+}
+
+.City__form__input, .City__form__input:focus{
+	background: transparent;
+	color: hsla(0,0%,100%,.7);
+	text-align: center;
+	font-size: 1.5rem;
+	width: 80%;
+	border: none;
+	border-bottom: solid 2px hsla(0,0%,100%,.7);
+	outline: none;
+}
+
 .CurrentBottom{
 	position: absolute;
 	bottom: 0;
@@ -150,6 +169,7 @@
 	padding: 36px 0;
 	background-color: white;
 	flex: 1 1;
+	justify-content: space-evenly;
 	border-bottom-left-radius: 32px;
 	border-bottom-right-radius: 32px;
 }

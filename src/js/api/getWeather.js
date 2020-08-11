@@ -1,5 +1,6 @@
 const {Weather} = require('./weather-class');
 const axios = require('../../../node_modules/axios');
+const { getCode } = require('country-list');
 
 let APPID =`${process.env.REACT_APP_APPID}`;      // Fill in API key
 
@@ -14,13 +15,14 @@ function requestWeather (location, weatherType = 'current') {
     const route = (weatherType === 'forecast')? '/forecast':'/weather';
     const response = openWeather.get(route, {
         params: { 
-            q: location,
+            q: location
         }
     });
     return response;
 }
 
-function getWeather (cc, city) {
+function getWeather (country, city) {
+    const cc = getCode(country);
     const location = `${city}, ${cc}`;
     return Promise.all([requestWeather(location), requestWeather(location, 'forecast')])
     .then((responseArray) =>{
@@ -54,7 +56,7 @@ function filterRawForecast (rawForecast) {
 
 function formatForecast (filteredForecast, days = 5) {
 	const dayList = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-	const today = new Date;
+	const today = new Date();
 	let currentIndex = today.getDay() - 2;
 	let formattedForecast = [];
 

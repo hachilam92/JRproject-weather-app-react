@@ -19,8 +19,8 @@ function OtherCityButton (props) {
 
 function OtherCityButtons (props) {
     const cities = props.cityArray;
-    const buttons = cities.map((city) => 
-        <OtherCityButton info = {city}/>
+    const buttons = cities.map((item) => 
+        <OtherCityButton key ={item.city} info = {item}/>
     );
     return (
         <div className = 'OtherCityButtons'>

@@ -18,7 +18,6 @@ weather
      |-city list
 */
 
-
 const otherCity = [
 	{
 		city : 'Perth',
@@ -26,12 +25,12 @@ const otherCity = [
 		icon : '11d'
 	},
 	{
-		city : 'Perth',
+		city : 'Sydney',
 		temperature : 14,
 		icon : '11d'
 	},
 	{
-		city : 'Perth',
+		city : 'Brisbane',
 		temperature : 14,
 		icon : '11d'
 	}
@@ -42,7 +41,7 @@ class Weather extends Component {
 	constructor (props) {
 		super(props);
 		this.state ={
-			country : 'au', 
+			country : 'Australia', 
 			city : 'Melbourne',
 			data : null,
 			loading : true,
@@ -107,6 +106,7 @@ class Weather extends Component {
 					<div>
 						<Current 	current = {currentWeather}
 									onCityChange = {this.onCityChange}
+									onCountryChange = {this.onCountryChange}
 						/>
 						<WeatherBottom cityArray = {otherCity} forecastArray = {forecastWeather}/>
 					</div>
