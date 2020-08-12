@@ -3,14 +3,6 @@ import CurrentCity from './City/city';
 import CurrentInfo from './Info/info';
 
 function Current (props) {
-	// const info = {
-	// 	city : props.current.city,
-	// 	temperature: props.current.temperature,
-	// 	weather: props.current.weather,
-	// 	humidity: props.current.humidity,
-	// 	wind: props.current.wind
-	// };
-	console.log({...props});
 	return (
 		<div className = 'Current'>
 			<CurrentInfo    temperature = {props.current.temperature}

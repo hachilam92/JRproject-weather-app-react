@@ -29,11 +29,12 @@ function getWeather (country, city) {
         const curRes = responseArray[0];
         const forRes = responseArray[1];
         const cityName = forRes.data.city.name;
+        const countryName = forRes.data.city.country;
         const current = new Weather (curRes.data);
         const rawForecast = forRes.data.list.map(item => new Weather(item));
         const filteredForecast = filterRawForecast(rawForecast);
         const forecast = formatForecast(filteredForecast);
-        const data = {cityName, current, forecast};
+        const data = {cityName, countryName, current, forecast};
         return data;
     })
     .catch(err => {

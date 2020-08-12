@@ -10,8 +10,8 @@ function toFahrenheit (Kelvin) {
     return Fahrenheit;
 }
 
-// default to two digits
-function xDigits (number, x = 2) {
+// default to one digits
+function xDigits (number, x = 1) {
     let formatted = Math.round(number * 10**x) / 10**x;
     return formatted;
 }

@@ -6,7 +6,9 @@ import ForecastWeather from './ForecastWeather';
 function WeatherBottom (props) {
     return (
         <div className = 'WeatherBottom'>
-            <OtherCity cityArray = {props.cityArray}/>
+            <OtherCity  cityArray = {props.cityArray}
+                        onOtherCitiesClick = {props.onOtherCitiesClick} 
+            />
             <div className = 'division'></div>
             <ForecastWeather forecastArray = {props.forecastArray}/>
         </div>
