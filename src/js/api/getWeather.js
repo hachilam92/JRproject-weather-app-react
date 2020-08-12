@@ -21,20 +21,19 @@ function requestWeather (location, weatherType = 'current') {
     return response;
 }
 
-function getWeather (country, city) {
-    const cc = getCode(country);
+function getWeather (cc, city) {
     const location = `${city}, ${cc}`;
     return Promise.all([requestWeather(location), requestWeather(location, 'forecast')])
     .then((responseArray) =>{
         const curRes = responseArray[0];
         const forRes = responseArray[1];
         const cityName = forRes.data.city.name;
-        const countryName = forRes.data.city.country;
+        const countryCode = forRes.data.city.country;
         const current = new Weather (curRes.data);
         const rawForecast = forRes.data.list.map(item => new Weather(item));
         const filteredForecast = filterRawForecast(rawForecast);
         const forecast = formatForecast(filteredForecast);
-        const data = {cityName, countryName, current, forecast};
+        const data = {cityName, countryCode, current, forecast};
         return data;
     })
     .catch(err => {

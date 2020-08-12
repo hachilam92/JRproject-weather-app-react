@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-// import logo from '../logo.svg';
-import '../App.css';
+import '../css/App.css';
 import Current from './components/Current/Current';
 import WeatherBottom from './components/WeatherBottom/WeatherBottom';
 import getWeather from './api/getWeather';
+import {getCode, getName} from 'country-list';
+
 require('dotenv').config();
 /* hierarchy
 weather								data
@@ -15,25 +16,26 @@ weather								data
 	|    |-title							weather	
 	|    |-info-list						icon		
 	-other city								description
-		|-city list						- forecast[0]-[4] (same a current) 	
+		|-city list						- forecast[0]-[4] (same a current)
+		                                - countryCode 	
 */
 
 class Weather extends Component {
 	constructor (props) {
 		super(props);
 		this.state ={
-			country : 'Australia', 
+			countryCode : 'AU', 
 			city : 'Melbourne',
 			data : null,
 			loading : true,
 			otherCities: []
 		};
 		this.onCityChange = this.onCityChange.bind(this);
+		this.onCountryChange = this.onCountryChange.bind(this);
 		this.onOtherCitiesClick = this.onOtherCitiesClick.bind(this);
-
 	}
 
-	checkInput(inputCity) {
+	checkCityInput(inputCity) {
 		const index = this.state.otherCities.findIndex((city) => {
 			return city.cityName.toUpperCase() === inputCity.toUpperCase();
 		});
@@ -50,7 +52,7 @@ class Weather extends Component {
 		this.setState({
 			loading : true
 		});
-		const newData = await getWeather(this.state.country, inputCity);
+		const newData = await getWeather(this.state.countryCode, inputCity);
 		if(newData === undefined) {
 			this.setState({
 				loading : false
@@ -71,7 +73,21 @@ class Weather extends Component {
 	}
 
 	onCityChange(inputCity) {
-		return this.checkInput(inputCity) && this.updateCity(inputCity);
+		return this.checkCityInput(inputCity) && this.updateCity(inputCity);
+	}
+
+	getCountryCode(inputCountry) {
+		return getCode(inputCountry) || false;
+	}
+
+	onCountryChange(inputCountry){
+		const countryCode = this.getCountryCode(inputCountry);
+		console.log(countryCode);
+		if(countryCode) {
+			this.setState({
+				countryCode: countryCode
+			});
+		} 	
 	}
 
 	onOtherCitiesClick(selectedCity) {
@@ -89,7 +105,7 @@ class Weather extends Component {
 		this.setState({
 			loading : true
 		});
-		const {country, city} = this.state;
+		const {countryCode: country, city} = this.state;
 		const currentData = await getWeather(country, city);
 		const otherCityNameList = ['Sydney', 'Brisbane', 'Perth'];
 		const otherCityList = [];
@@ -113,7 +129,7 @@ class Weather extends Component {
 		const loadingStyle = {
 			borderRadius : '32px',
 		};
-		const {data, loading, otherCities} = this.state;
+		const {countryCode, data, loading, otherCities} = this.state;
 	
 		return (
 			<div className = 'Weather'>
@@ -127,6 +143,7 @@ class Weather extends Component {
 					<div>
 						<Current 	current = {data.current}
 									city = {data.cityName}
+									country = {countryCode}
 									onCityChange = {this.onCityChange}
 									onCountryChange = {this.onCountryChange}
 						/>

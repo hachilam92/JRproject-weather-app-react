@@ -8,11 +8,10 @@ class CurrentCity extends Component {
 		this.state = {
 			cityValue : this.defaultValue,
 		};
-		this.handleCityChange = this.handleCityChange.bind(this);
-		this.handleCitySubmit = this.handleCitySubmit.bind(this);
-		this.updateDisplay = this.updateDisplay.bind(this);
-		this.handleCityFocus = this.handleCityFocus.bind(this);
-		this.handleCityBlur = this.handleCityBlur.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleFocus = this.handleFocus.bind(this);
+		this.handleBlur = this.handleBlur.bind(this);
 	}
 
 	updateDisplay(inputValue) {
@@ -21,22 +20,22 @@ class CurrentCity extends Component {
 		});
 	}
 
-	handleCityChange(e) {
+	handleChange(e) {
 		this.updateDisplay(e.target.value);
     }
 
-	handleCitySubmit(e) {
+	handleSubmit(e) {
 		e.preventDefault();
 		this.props.onCityChange(this.state.cityValue);
 	}
 	
-	handleCityFocus(e) {
+	handleFocus(e) {
 		if (this.state.cityValue === this.defaultValue) {
 			this.updateDisplay('');
 		}	
 	}
 
-	handleCityBlur(e) {
+	handleBlur(e) {
 		if (this.state.cityValue === '') {
 			this.updateDisplay(this.defaultValue);
 		}	
@@ -46,12 +45,12 @@ class CurrentCity extends Component {
 		return (
 			<div className = 'City'>
 				<h1>{this.props.city}</h1>
-				<form className='City__form' onSubmit={this.handleCitySubmit}>
+				<form className='City__form' onSubmit={this.handleSubmit}>
 					<input  className='City__form__input'
 							value={this.state.cityValue}
-							onChange={this.handleCityChange}
-							onFocus={this.handleCityFocus}
-							onBlur={this.handleCityBlur}
+							onChange={this.handleChange}
+							onFocus={this.handleFocus}
+							onBlur={this.handleBlur}
 					/>
 				</form>
 			</div>

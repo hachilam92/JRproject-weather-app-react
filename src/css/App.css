@@ -76,6 +76,44 @@
 	height: 100px;
 }
 
+.Country{
+	position: absolute;
+	top: 30px;
+	right: 30px;
+	display: flex;
+	font-size: 0.8rem;
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: center;
+}
+
+.Country__name{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 35px;
+	height: 35px;
+	background-color: hsla(0,0%,90%,.3);
+	border-radius: 50%;
+	margin-left: 0.3rem;
+}
+
+.Country__form input{
+	background: transparent;
+	outline: none;
+	border: none;
+	border-bottom: solid 2px hsla(0,0%,80%,.7);
+	color: hsla(0,0%,80%,.7);
+	text-align: center;
+	width: 8rem;
+}
+
+.Country__name:hover{
+	background-color: hsla(0,0%,100%,.3);
+	box-shadow: 0 0 1px 2px hsla(0,0%,100%,.3);
+	cursor: pointer;
+}
+
 .CurrentInfo{
 	padding: 0 96px;
   	display: flex;
@@ -126,7 +164,7 @@
 	margin: 0;
 }
 
-.City h1:after{
+/* .City h1:after{
 	content: '';
 	background-color: white;
 	display: block;
@@ -135,7 +173,7 @@
 	transform: translateX(50%);
 	margin-top: 1rem;
 	border-radius: 2px;
-}
+} */
 
 .City__form{
 	position: relative;

@@ -1,23 +1,5 @@
 import React, {Component} from 'react';
 
-// function OtherCityButton (props) {
-//     const iconUrlAddress = `http://openweathermap.org/img/wn/${props.info.icon}.png`;
-//     return (
-//         <button className = 'OtherCityButton'
-//                 onClick = {props.onOtherCitiesClick}
-//         >
-//             <h3 className = 'OtherCityButton__city'>
-//                 {props.city}
-//             </h3>
-//             <div className = 'OtherCityButton__temperature'>
-//                 {Math.round(props.info.temperature)} °
-//             </div>
-//             <div className = 'OtherCityButton__icon'>
-//                 <img src ={iconUrlAddress} alt = {props.info.description}/>
-//             </div>
-//         </button>
-//     );
-// }
 
 class OtherCityButton extends Component {
 
