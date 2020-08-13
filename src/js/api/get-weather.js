@@ -5,7 +5,7 @@ const axios = require('axios');
 let APPID =`${process.env.REACT_APP_APPID}`;      // Fill in API key
 
 const openWeather = axios.create({
-    baseURL: 'http://api.openweathermap.org/data/2.5',
+    baseURL: 'https://api.openweathermap.org/data/2.5',
     params: {
         appid: APPID
     }            
