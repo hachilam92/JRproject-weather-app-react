@@ -27,6 +27,10 @@
 	}
 
 	&__form{
+		display: flex;
+		align-items: center;
+		overflow: hidden;
+
 		input{
 			background: transparent;
 			outline: none;
@@ -34,7 +38,22 @@
 			border-bottom: solid 2px hsla(0,0%,80%,.7);
 			color: hsla(0,0%,80%,.7);
 			text-align: center;
+			width: 100%;
+			position: relative;
+			animation-duration: 0.5s;
+			animation-name: slide;
+			animation-fill-mode: forwards;
 			width: 8rem;
+	
+			@keyframes slide {
+				from {
+					right: -100px; 
+				}
+			  
+				to {
+					right: 0;
+				}
+			}
 		}
 	}
 
