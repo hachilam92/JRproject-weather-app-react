@@ -1,0 +1,20 @@
+.WeatherBottom{
+	display: flex;
+	padding: 36px 0;
+	background-color: white;
+	flex: 1 1;
+	justify-content: space-evenly;
+	border-bottom-left-radius: 32px;
+	border-bottom-right-radius: 32px;
+
+	.division{
+		background-color: rgba(0, 0, 0, 0.1);
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.WeatherBottom{
+		flex-direction: column-reverse;
+		padding: 0;
+	}
+}

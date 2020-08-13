@@ -1,0 +1,58 @@
+.City{
+	padding: 0 96px;
+	padding-top: 16px;
+
+	h1 {
+		font-weight: 500;
+		margin: 0;
+	}
+
+	&__form{
+		position: relative;
+		margin: 0;
+		padding: 0;
+		margin-top: 110px;
+		text-align: center;
+
+		&__input{
+			background: transparent;
+			color: hsla(0,0%,100%,.7);
+			text-align: center;
+			font-size: 1.3rem;
+			width: 80%;
+			border: none;
+			border-bottom: solid 1px hsla(0,0%,100%,.7);
+			outline: none;
+		}
+	}
+
+}
+
+/* .City h1:after{
+	content: '';
+	background-color: white;
+	display: block;
+	width: 50%;
+	height: 3px;
+	transform: translateX(50%);
+	margin-top: 1rem;
+	border-radius: 2px;
+} */
+
+@media screen and (max-width: 1024px) {
+	.City{
+		padding: 20px 50px;
+
+		h1 {
+			font-weight: 300;
+		}
+
+		&__form{
+			margin-top: 20px;
+			&__input{
+				font-size: 1rem;
+				width: 50%;
+			}
+		}
+	}
+}

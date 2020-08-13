@@ -1,0 +1,44 @@
+.CurrentInfo{
+	padding: 0 96px;
+  	display: flex;
+	flex-direction: column;
+	color: hsla(0,0%,100%,.7);
+
+	&__temperature{
+		font-size: 5rem;
+		color: white;
+	}
+
+	&__weather{
+		font-size: 1.5rem;
+		letter-spacing: 5px;
+		margin-top: 0.25rem;
+
+		span{
+			color: hsla(0,0%,100%,.7);
+		}
+	}
+
+	&__details{
+		display: flex;
+		text-align: center;
+		justify-content: space-between;
+		margin-top: 3rem;
+
+		&__item{
+			display: flex;
+			flex-direction: column;
+		}
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.CurrentInfo{
+		padding: 20px 50px;
+
+		&__temperature{
+			font-size: 3rem;
+		}
+	}
+
+}

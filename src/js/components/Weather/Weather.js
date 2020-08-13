@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import Current from '../Current/Current';
-import WeatherBottom from '../WeatherBottom/WeatherBottom';
-import getWeather from '../../api/getWeather';
+import './weather.scss';
+import Current from '../Current/current';
+import WeatherBottom from '../WeatherBottom/weather-bottom';
+import getWeather from '../../api/get-weather';
 import {getCode, getName} from 'country-list';
 
 /* data format									
@@ -35,15 +36,21 @@ class Weather extends Component {
 
 
 	checkCityInput(inputCity) {
-		const index = this.state.otherCities.findIndex((city) => {
-			return city.cityName.toUpperCase() === inputCity.toUpperCase();
+		const cityArray = this.state.otherCities;
+		const index = cityArray.findIndex((city) => {
+			return (city.cityName.toUpperCase() === inputCity.toUpperCase()) &&
+				(city.countryCode === this.state.countryCode);
 		});
-		if(index > 0){
-			this.onOtherCitiesClick(this.state.otherCities[index].cityName);
-			console.log('click');
+
+		const cityNameDiff = (inputCity.toUpperCase() !== this.state.city.toUpperCase());
+		const countryCodeDiff = (this.state.data.countryCode !== this.state.countryCode);
+
+		if(index >= 0){
+			this.onOtherCitiesClick(cityArray[index].cityName);
+
 			return false;
 		}else{
-			return (inputCity.toUpperCase() !== this.state.city.toUpperCase());
+			return (cityNameDiff || countryCodeDiff);
 		}
 	}
 
@@ -62,7 +69,6 @@ class Weather extends Component {
 		const newOtherCities = this.state.otherCities.map((city) => city);
 		newOtherCities.shift();
 		newOtherCities.push(this.state.data);
-		console.log('update');
 		this.setState({
 			city: newCity,
 			data: newData,
@@ -86,7 +92,6 @@ class Weather extends Component {
 
 	onCountryChange(inputCountry){
 		const countryCode = this.getCountryCode(inputCountry);
-		console.log(countryCode);
 		if(countryCode) {
 			this.setState({
 				countryCode: countryCode.toUpperCase()
@@ -98,10 +103,13 @@ class Weather extends Component {
 		const newOtherCities = this.state.otherCities.map((city) => city);
 		const selectedIndex = newOtherCities.findIndex((city) => city.cityName === selectedCity);
 		const newData = newOtherCities.splice(selectedIndex, 1, this.state.data)[0];
+		const newCountryCode = newData.countryCode; 
 
 		this.setState({
 			data : newData,
-			otherCities : newOtherCities
+			otherCities : newOtherCities,
+			countryCode : newCountryCode,
+			city: newData.cityName
 		});
 	}
 

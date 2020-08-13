@@ -1,4 +1,5 @@
 import React from 'react';
+import './info.scss';
 
 function CurrentInfo (props) {
 	return (

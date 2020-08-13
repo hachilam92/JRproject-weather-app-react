@@ -1,5 +1,6 @@
 import React from 'react';
 import {Component} from 'react';
+import './country.scss';
 
 class Country extends Component {
     constructor(props) {

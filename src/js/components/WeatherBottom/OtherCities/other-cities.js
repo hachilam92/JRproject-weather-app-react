@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import './other-cities.scss';
 
 
 class OtherCityButton extends Component {
@@ -33,7 +34,7 @@ class OtherCityButton extends Component {
 function OtherCityButtons (props) {
     const cities = props.cityArray;
     const buttons = cities.map((city) => 
-        <OtherCityButton    key = {city.cityName}
+        <OtherCityButton    key = {`${city.countryCode}${city.cityName}`}
                             city = {city.cityName}
                             temperature = {city.current.temperature}
                             icon = {city.current.icon}

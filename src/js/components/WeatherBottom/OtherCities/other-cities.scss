@@ -1,0 +1,74 @@
+.OtherCity{
+	display: flex;
+	flex-direction: column;
+	padding: 0 48px;
+	font-size: 1.5rem;
+
+	&__title{
+		margin: 0;
+		margin-bottom: 1rem;
+		letter-spacing: 2px;
+		font-weight: 300;
+		font-size: 1.5rem;
+		/* flex: auto; */
+	}
+}
+
+
+.OtherCityButton{
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	border: 0;
+	background: transparent;
+	text-align: left;
+	padding: 0.4rem 0.4rem;
+	cursor: pointer;
+	outline: none;
+
+	&:hover{
+		background:rgb(197, 193, 193);
+		border-radius: 10px;
+	}
+
+	&__city{
+		font-weight: 400;
+		width: 120px;
+		letter-spacing: 1px;
+		margin: 0;
+		font-size: 1rem;
+	}
+
+	&__temperature{
+		width: 40px;
+		font-size: 1.25rem;
+		color: rgba(0,0,0,.5);
+	}
+
+	&__icon{
+		margin-left: 1rem;
+		width: 40px;
+		height: 40px;
+		background-color: rgb(197, 193, 193);
+		border-radius: 50%;
+
+		img{
+			width: 100%;
+		}
+	}
+}
+
+
+@media screen and (max-width: 1024px) {
+	.OtherCity{
+		padding: 24px 36px;
+
+		&__title{
+			font-size: 1rem;
+		}
+	}
+
+	.OtherCityButton{
+		width: 100%;
+	}
+}

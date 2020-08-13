@@ -1,4 +1,5 @@
 import React from 'react';
+import './current.scss';
 import Country from './Country/country';
 import CurrentCity from './City/city';
 import CurrentInfo from './Info/info';

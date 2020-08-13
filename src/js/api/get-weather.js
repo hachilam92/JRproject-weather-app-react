@@ -1,6 +1,5 @@
 const {Weather} = require('./weather-class');
-const axios = require('../../../node_modules/axios');
-const { getCode } = require('country-list');
+const axios = require('axios');
 
 let APPID =`${process.env.REACT_APP_APPID}`;      // Fill in API key
 

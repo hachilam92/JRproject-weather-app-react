@@ -1,4 +1,5 @@
 import React from 'react';
+import './forecast-weather.scss';
 
 function ForecastListItem (props) {
 

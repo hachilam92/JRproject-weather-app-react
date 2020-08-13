@@ -1,0 +1,15 @@
+.Weather {
+	margin: 30px;
+	border-radius: 32px;
+	box-shadow: 0 0 16px rgba(0,0,0,.5);
+	transition: all 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 1024px) {
+	.Weather {
+		width: 50%;
+		min-width: 350px;
+		margin-top: 50px;
+	}
+
+}

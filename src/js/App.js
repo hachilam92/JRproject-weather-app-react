@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React from 'react';
 import '../css/App.css';
-import Weather from './components/Weather/Weather'
+import Weather from './components/Weather/weather'
 
 
 require('dotenv').config();
