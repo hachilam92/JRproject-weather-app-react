@@ -11,6 +11,4 @@ class Weather {
     }
 }
 
-module.exports = {
-    Weather
-}
+export default Weather;
