@@ -47,7 +47,6 @@ class Weather extends Component {
 
 		if(index >= 0){
 			this.onOtherCitiesClick(cityArray[index].cityName);
-
 			return false;
 		}else{
 			return (cityNameDiff || countryCodeDiff);

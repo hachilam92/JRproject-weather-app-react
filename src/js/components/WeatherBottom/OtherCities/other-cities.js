@@ -1,54 +1,6 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './other-cities.scss';
-
-
-class OtherCityButton extends Component {
-
-    handleClick = (e) => {
-        this.props.onOtherCitiesClick(this.props.city);
-    };
-
-    render() {
-        const {city, temperature, icon, description} = this.props;
-        
-        return (
-            <button className = 'OtherCityButton'
-                    onClick = {this.handleClick}
-            >
-                <h3 className = 'OtherCityButton__city'>
-                    {city}
-                </h3>
-                <div className = 'OtherCityButton__temperature'>
-                    {Math.round(temperature)} °
-                </div>
-                <div className = 'OtherCityButton__icon'>
-                    <img src ={`http://openweathermap.org/img/wn/${icon}.png`} alt = {description}/>
-                </div>
-            </button>
-        );
-    }
-}
-
-
-
-function OtherCityButtons (props) {
-    const cities = props.cityArray;
-    const buttons = cities.map((city) => 
-        <OtherCityButton    key = {`${city.countryCode}${city.cityName}`}
-                            city = {city.cityName}
-                            temperature = {city.current.temperature}
-                            icon = {city.current.icon}
-                            description = {city.current.description}
-                            onOtherCitiesClick = {props.onOtherCitiesClick}  
-         />
-    );
-    return (
-        <div className = 'OtherCityButtons'>
-            {buttons}
-        </div>
-    );
-}
-
+import OtherCityButtons from './other-city-buttons';
 
 function OtherCity (props) {
     return (
