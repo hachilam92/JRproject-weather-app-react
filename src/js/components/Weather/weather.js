@@ -116,13 +116,13 @@ class Weather extends Component {
 		this.setState({
 			loading : true
 		});
-		const {countryCode: country, city} = this.state;
-		const currentData = await getWeather(country, city);
+		const {countryCode, city} = this.state;
+		const currentData = await getWeather(countryCode, city);
 		const otherCityNameList = ['Sydney', 'Brisbane', 'Perth'];
 		const otherCityList = [];
 		for(let i = 0; i < otherCityNameList.length; i++) {
 			let city = otherCityNameList[i];
-			let otherCityData = await getWeather(country, city);
+			let otherCityData = await getWeather(countryCode, city);
 			otherCityList.push(otherCityData);
 		}
 		this.setState({
