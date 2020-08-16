@@ -25,9 +25,8 @@ class Weather extends Component {
 		this.state ={
 			countryCode : 'AU', 
 			city : 'Melbourne',
-			data : null,
 			loading : true,
-			otherCities: []
+			dataArray: []
 		};
 		this.onCityChange = this.onCityChange.bind(this);
 		this.onCountryChange = this.onCountryChange.bind(this);
@@ -36,20 +35,16 @@ class Weather extends Component {
 
 
 	checkCityInput(inputCity) {
-		const cityArray = this.state.otherCities;
-		const index = cityArray.findIndex((city) => {
-			return (city.cityName.toUpperCase() === inputCity.toUpperCase()) &&
-				(city.countryCode === this.state.countryCode);
+		const index = this.state.dataArray.findIndex((data)=> {
+			return (data.cityName.toUpperCase() === inputCity.toUpperCase()) &&
+					(data.countryCode === this.state.countryCode);
 		});
 
-		const cityNameDiff = (inputCity.toUpperCase() !== this.state.city.toUpperCase());
-		const countryCodeDiff = (this.state.data.countryCode !== this.state.countryCode);
-
-		if(index >= 0){
-			this.onOtherCitiesClick(cityArray[index].cityName);
+		if(index > 0 ) {
+			this.onOtherCitiesClick(index -1);
 			return false;
 		}else{
-			return (cityNameDiff || countryCodeDiff);
+			return (index === 0)? false : true;
 		}
 	}
 
@@ -65,13 +60,12 @@ class Weather extends Component {
 			return alert('country or city can not found');
 		}
 		const newCity = newData.cityName;
-		const newOtherCities = this.state.otherCities.map((city) => city);
-		newOtherCities.shift();
-		newOtherCities.push(this.state.data);
+		const newDataArray = this.state.dataArray.map((city) => city);
+		newDataArray.unshift(newData);
+		newDataArray.pop();
 		this.setState({
 			city: newCity,
-			data: newData,
-			otherCities : newOtherCities,
+			dataArray: newDataArray,
 			loading : false
 		});
 	}
@@ -98,17 +92,18 @@ class Weather extends Component {
 		} 	
 	}
 
-	onOtherCitiesClick(selectedCity) {
-		const newOtherCities = this.state.otherCities.map((city) => city);
-		const selectedIndex = newOtherCities.findIndex((city) => city.cityName === selectedCity);
-		const newData = newOtherCities.splice(selectedIndex, 1, this.state.data)[0];
-		const newCountryCode = newData.countryCode; 
-
+	onOtherCitiesClick(index) {
+		const selectedIndex = index + 1;
+		const selectedData = this.state.dataArray[selectedIndex];
+		const newDataArray = this.state.dataArray.map((data) => data);
+		newDataArray.splice(selectedIndex, 1);
+		newDataArray.unshift(selectedData);
+		const currentData = newDataArray[0];
+		
 		this.setState({
-			data : newData,
-			otherCities : newOtherCities,
-			countryCode : newCountryCode,
-			city: newData.cityName
+			dataArray: newDataArray,
+			countryCode : currentData.countryCode,
+			city: currentData.cityName
 		});
 	}
 
@@ -116,19 +111,17 @@ class Weather extends Component {
 		this.setState({
 			loading : true
 		});
-		const {countryCode, city} = this.state;
-		const currentData = await getWeather(countryCode, city);
-		const otherCityNameList = ['Sydney', 'Brisbane', 'Perth'];
-		const otherCityList = [];
-		for(let i = 0; i < otherCityNameList.length; i++) {
-			let city = otherCityNameList[i];
-			let otherCityData = await getWeather(countryCode, city);
-			otherCityList.push(otherCityData);
+		const {countryCode} = this.state;
+		const cityNameList = ['Melbourne', 'Sydney', 'Brisbane', 'Perth'];
+		const cityList = [];
+		for(let i = 0; i < cityNameList.length; i++) {
+			let city = cityNameList[i];
+			let cityData = await getWeather(countryCode, city);
+			cityList.push(cityData);
 		}
 		this.setState({
-			data : currentData,
+			dataArray : cityList,
 			loading : false,
-			otherCities : otherCityList
 		});
 	}
 
@@ -140,7 +133,8 @@ class Weather extends Component {
 		const loadingStyle = {
 			borderRadius : '32px',
 		};
-		const {countryCode, data, loading, otherCities} = this.state;
+		const {countryCode, loading, dataArray} = this.state;
+		const currentCityIndex = 0;
 	
 		return (
 			<div className = 'Weather'>
@@ -152,14 +146,14 @@ class Weather extends Component {
 					</div>
 				:
 					<div>
-						<Current 	current = {data.current}
-									city = {data.cityName}
+						<Current 	current = {dataArray[currentCityIndex].current}
+									city = {dataArray[currentCityIndex].cityName}
 									country = {countryCode}
 									onCityChange = {this.onCityChange}
 									onCountryChange = {this.onCountryChange}
 						/>
-						<WeatherBottom 	cityArray = {otherCities}
-										forecastArray = {data.forecast}
+						<WeatherBottom 	cityArray = {dataArray.slice(currentCityIndex + 1, dataArray.length)}
+										forecastArray = {dataArray[currentCityIndex].forecast}
 										onOtherCitiesClick = {this.onOtherCitiesClick}
 						/>
 					</div>

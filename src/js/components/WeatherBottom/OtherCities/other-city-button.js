@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class OtherCityButton extends Component {
 
     handleClick = (e) => {
-        this.props.onOtherCitiesClick(this.props.city);
+        this.props.onOtherCitiesClick(this.props.index);
     };
 
     render() {
