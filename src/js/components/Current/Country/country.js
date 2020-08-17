@@ -47,9 +47,7 @@ class Country extends Component {
 	}
 
 	handleBlur(e) {
-		if (this.state.countryValue === '') {
-			this.updateDisplay(this.defaultValue);
-		}	
+        return (this.state.countryValue === '')? this.toggleInput() : this.handleSubmit(e);
 	}
 
     render() {

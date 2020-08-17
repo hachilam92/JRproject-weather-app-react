@@ -22,6 +22,10 @@ class CurrentCity extends Component {
 		});
 	}
 
+	resetDisplay() {
+		this.updateDisplay(this.defaultValue);
+	}
+
 	handleChange(e) {
 		this.updateDisplay(e.target.value);
     }
@@ -35,7 +39,10 @@ class CurrentCity extends Component {
 	handleBlur(e) {
 		if (this.state.cityValue === '') {
 			this.updateDisplay(this.defaultValue);
-		}	
+		}
+		return (this.state.cityValue === '') ?
+			this.resetDisplay() :
+			this.handleSubmit(e); 
 	}
 
 	handleSubmit(e) {
@@ -44,6 +51,7 @@ class CurrentCity extends Component {
 		if(validate) {
 			this.updateData(this.state.cityValue);
 		}
+		this.resetDisplay();
 	}
 	
 	async updateData(inputCity) {
