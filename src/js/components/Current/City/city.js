@@ -1,5 +1,6 @@
 import React from 'react';
 import {Component} from 'react';
+import getWeather from '../../../api/get-weather';
 import './city.scss';
 
 class CurrentCity extends Component {
@@ -25,11 +26,6 @@ class CurrentCity extends Component {
 		this.updateDisplay(e.target.value);
     }
 
-	handleSubmit(e) {
-		e.preventDefault();
-		this.props.onCityChange(this.state.cityValue);
-	}
-	
 	handleFocus(e) {
 		if (this.state.cityValue === this.defaultValue) {
 			this.updateDisplay('');
@@ -40,6 +36,25 @@ class CurrentCity extends Component {
 		if (this.state.cityValue === '') {
 			this.updateDisplay(this.defaultValue);
 		}	
+	}
+
+	handleSubmit(e) {
+		e.preventDefault();
+		const validate = this.props.checkCityInput(this.state.cityValue);
+		if(validate) {
+			this.updateData(this.state.cityValue);
+		}
+	}
+	
+	async updateData(inputCity) {
+		this.props.toggleLoading(true);
+		const newData = await getWeather(this.props.country, inputCity);
+		if(newData === undefined) {
+			this.props.toggleLoading(false);
+			return alert('country or city can not found');
+		}
+		this.props.updateDataArray(newData);
+		this.props.toggleLoading(false);
 	}
 
 	render() {

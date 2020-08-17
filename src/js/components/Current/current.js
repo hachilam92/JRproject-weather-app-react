@@ -16,6 +16,10 @@ function Current (props) {
 							wind = {props.current.wind}
 			/>
 			<CurrentCity 	city = {props.city}
+							country = {props.country}
+							checkCityInput = {props.checkCityInput}
+							toggleLoading = {props.toggleLoading}
+							updateDataArray ={props.updateDataArray}
 							onCityChange = {props.onCityChange}
 			/>
 			<div className = 'CurrentBottom'></div>
