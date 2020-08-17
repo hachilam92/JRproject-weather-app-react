@@ -24,7 +24,6 @@ class Weather extends Component {
 		super(props);
 		this.state ={
 			countryCode : 'AU', 
-			city : 'Melbourne',
 			loading : true,
 			dataArray: []
 		};
@@ -59,12 +58,10 @@ class Weather extends Component {
 			});
 			return alert('country or city can not found');
 		}
-		const newCity = newData.cityName;
 		const newDataArray = this.state.dataArray.map((city) => city);
 		newDataArray.unshift(newData);
 		newDataArray.pop();
 		this.setState({
-			city: newCity,
 			dataArray: newDataArray,
 			loading : false
 		});
