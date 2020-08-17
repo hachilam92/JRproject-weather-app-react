@@ -40,7 +40,7 @@ class CurrentCity extends Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
-		const validate = this.props.checkCityInput(this.state.cityValue);
+		const validate = this.props.checkCityInput(this.state.cityValue, this.props.country);
 		if(validate) {
 			this.updateData(this.state.cityValue);
 		}

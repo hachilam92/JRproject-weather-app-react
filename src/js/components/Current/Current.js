@@ -11,7 +11,7 @@ class Current extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			countryCode: this.props.country
+			countryCode: this.props.children.countryCode
 		};
 		this.onCountryChange = this.onCountryChange.bind(this);
 	}
@@ -23,8 +23,10 @@ class Current extends Component {
 	}
 	
 	componentDidUpdate(prevProps) {
-		if(this.props.country !== prevProps.country) {
-			this.updateCountryCode(this.props.country);
+		const newCountryCode = this.props.children.countryCode;
+		const prevCountryCode = prevProps.children.countryCode;
+		if( newCountryCode !== prevCountryCode) {
+			this.updateCountryCode(newCountryCode);
 		}
 	}
 
@@ -45,17 +47,19 @@ class Current extends Component {
 	}
 	
 	render() {
+		const {temperature, humidity, wind, weather} = this.props.children.current;
+		const {cityName} = this.props.children;
 		return (
 			<div className = 'Current'>
 				<Country 	country = {this.state.countryCode}
 							onCountryChange = {this.onCountryChange}
 				/>
-				<CurrentInfo    temperature = {this.props.current.temperature}
-								weather = {this.props.current.weather}
-								humidity = {this.props.current.humidity}
-								wind = {this.props.current.wind}
+				<CurrentInfo    temperature = {temperature}
+								humidity = {humidity}
+								wind = {wind}
+								weather = {weather}		
 				/>
-				<CurrentCity 	city = {this.props.city}
+				<CurrentCity 	city = {cityName}
 								country = {this.state.countryCode}
 								checkCityInput = {this.props.checkCityInput}
 								toggleLoading = {this.props.toggleLoading}

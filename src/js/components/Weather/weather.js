@@ -45,14 +45,13 @@ class Weather extends Component {
 		);
 	}
 
-	checkCityInput(inputCity) {
-		const index = this.state.dataArray.findIndex((data)=> {
+	checkCityInput(inputCity, inputCountry) {
+		const index = this.state.dataArray.findIndex((data) => {
 			return (data.cityName.toUpperCase() === inputCity.toUpperCase()) &&
-					(data.countryCode === this.state.countryCode);
+					(data.countryCode === inputCountry);
 		});
 		if(index > 0 ) {
 			this.onOtherCitiesClick(index - 1);
-			console.log();
 			return false;
 		}else{
 			return (index === 0)? false : true;
@@ -111,18 +110,17 @@ class Weather extends Component {
 					</div>
 				:
 					<div>
-						<Current 	current = {dataArray[currentCityIndex].current}
-									city = {dataArray[currentCityIndex].cityName}
-									country = {dataArray[currentCityIndex].countryCode}
-									checkCityInput = {this.checkCityInput}
+						<Current 	checkCityInput = {this.checkCityInput}
 									toggleLoading = {this.toggleLoading}
 									updateDataArray = {this.updateDataArray}
 									onCountryChange = {this.onCountryChange}
-						/>
-						<WeatherBottom 	cityArray = {dataArray.slice(currentCityIndex + 1, dataArray.length)}
-										forecastArray = {dataArray[currentCityIndex].forecast}
-										onOtherCitiesClick = {this.onOtherCitiesClick}
-						/>
+						>
+							{dataArray[currentCityIndex]}
+						</Current>
+						<WeatherBottom 	onOtherCitiesClick = {this.onOtherCitiesClick}
+						>
+							{dataArray}
+						</WeatherBottom>
 					</div>
 				}
 			</div>

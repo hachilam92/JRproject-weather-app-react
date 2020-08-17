@@ -5,13 +5,15 @@ import ForecastWeather from './ForecastWeather/forecast-weather';
 
 
 function WeatherBottom (props) {
+    const cityArray = props.children.slice(1);
+    const forecastArray = props.children[0].forecast;
     return (
         <div className = 'WeatherBottom'>
-            <OtherCity  cityArray = {props.cityArray}
+            <OtherCity  cityArray = {cityArray}
                         onOtherCitiesClick = {props.onOtherCitiesClick} 
             />
             <div className = 'division'></div>
-            <ForecastWeather forecastArray = {props.forecastArray}/>
+            <ForecastWeather forecastArray = {forecastArray}/>
         </div>
     );
 }
