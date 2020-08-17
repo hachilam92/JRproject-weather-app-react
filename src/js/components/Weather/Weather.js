@@ -50,7 +50,6 @@ class Weather extends Component {
 			return (data.cityName.toUpperCase() === inputCity.toUpperCase()) &&
 					(data.countryCode === this.state.countryCode);
 		});
-
 		if(index > 0 ) {
 			this.onOtherCitiesClick(index - 1);
 			console.log();
@@ -60,19 +59,21 @@ class Weather extends Component {
 		}
 	}
 
-	updateDataArray(newData) {
+	//write new data: only pass in 'newData'
+	//switch element order: only pass in 'index', switch position with the first element  
+	updateDataArray(newData, index = null) {
 		const newDataArray = this.state.dataArray.map((city) => city);
-		newDataArray.unshift(newData);
-		newDataArray.pop();
+		const currentData = (index)? newDataArray.splice(index, 1)[0] : newData;
+		newDataArray.unshift(currentData);
+		if(newData){
+			newDataArray.pop();
+		}
 		this.setDataArray(newDataArray);
 	}
 
 	onOtherCitiesClick(index) {
 		const dataArrayIndex = index + 1;
-		const newDataArray = this.state.dataArray.map((data) => data);
-		const currentData = newDataArray.splice(dataArrayIndex, 1)[0];
-		newDataArray.unshift(currentData);
-		this.setDataArray(newDataArray);
+		this.updateDataArray(undefined, dataArrayIndex);
 	}
 
 	async initialRequest () {
