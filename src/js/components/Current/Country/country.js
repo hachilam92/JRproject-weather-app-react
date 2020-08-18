@@ -5,7 +5,7 @@ import './country.scss';
 class Country extends Component {
     constructor(props) {
         super(props);
-        this.defaultValue = 'Change country?';
+        this.defaultValue = 'country name/code';
         this.state = {
             countryValue : this.defaultValue,
             hideInput : true
