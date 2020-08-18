@@ -37,7 +37,7 @@ class CurrentCity extends Component {
 	}
 
 	handleBlur(e) {
-		return (this.state.cityValue === '') ?
+		return (this.state.cityValue === '' || this.state.cityValue === this.defaultValue) ?
 			this.resetDisplay() :
 			this.handleSubmit(e); 
 	}
