@@ -5,7 +5,7 @@ import './country.scss';
 class Country extends Component {
     constructor(props) {
         super(props);
-        this.defaultValue = 'country name/code';
+        this.defaultValue = 'country or code';
         this.state = {
             countryValue : this.defaultValue,
             hideInput : true
@@ -52,23 +52,26 @@ class Country extends Component {
 
     render() {
         const {countryValue, hideInput} = this.state;
+        const {toggleInput, handleChange, handleSubmit, handleFocus, handleBlur} = this;
+        const {country} = this.props;
+
         return (
             <div className = 'Country'>
                 <div    className = 'Country__name'
-                        onClick = {this.toggleInput}
+                        onClick = {toggleInput}
                 >
-                    {this.props.country}
+                    {country}
                 </div>
                 {hideInput?
                     ''
                 :
                     <form   className = 'Country__form'
-                            onSubmit = {this.handleSubmit}
+                            onSubmit = {handleSubmit}
                     >
                         <input  value = {countryValue}
-                                onChange = {this.handleChange}
-                                onBlur = {this.handleBlur}
-                                onFocus = {this.handleFocus}
+                                onChange = {handleChange}
+                                onBlur = {handleBlur}
+                                onFocus = {handleFocus}
                         />
                     </form> 
                 }   

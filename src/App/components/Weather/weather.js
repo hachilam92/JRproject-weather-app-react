@@ -98,7 +98,8 @@ class Weather extends Component {
 			borderRadius : '32px',
 		};
 		const {loading, dataArray} = this.state;
-		const currentCityIndex = 0;
+		const data = dataArray[0];
+		const {toggleLoading, checkCityInput, updateDataArray, onOtherCitiesClick} = this;
 	
 		return (
 			<div className = 'Weather'>
@@ -109,19 +110,27 @@ class Weather extends Component {
 						</div>
 					</div>
 				:
-					<div>
-						<Current 	checkCityInput = {this.checkCityInput}
-									toggleLoading = {this.toggleLoading}
-									updateDataArray = {this.updateDataArray}
-									onCountryChange = {this.onCountryChange}
-						>
-							{dataArray[currentCityIndex]}
+					<>
+						<Current>
+							{
+								{
+									data,
+									toggleLoading,
+									checkCityInput,
+									updateDataArray
+								}
+							}
 						</Current>
-						<WeatherBottom 	onOtherCitiesClick = {this.onOtherCitiesClick}
-						>
-							{dataArray}
+						<WeatherBottom>
+							{
+								{
+									dataArray,
+									onOtherCitiesClick
+								}
+								
+							}
 						</WeatherBottom>
-					</div>
+					</>
 				}
 			</div>
 		);

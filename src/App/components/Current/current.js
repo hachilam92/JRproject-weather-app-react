@@ -11,7 +11,7 @@ class Current extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			countryCode: this.props.children.countryCode
+			countryCode: this.props.children.data.countryCode
 		};
 		this.onCountryChange = this.onCountryChange.bind(this);
 	}
@@ -23,8 +23,8 @@ class Current extends Component {
 	}
 	
 	componentDidUpdate(prevProps) {
-		const newCountryCode = this.props.children.countryCode;
-		const prevCountryCode = prevProps.children.countryCode;
+		const newCountryCode = this.props.children.data.countryCode;
+		const prevCountryCode = prevProps.children.data.countryCode;
 		if( newCountryCode !== prevCountryCode) {
 			this.updateCountryCode(newCountryCode);
 		}
@@ -47,12 +47,17 @@ class Current extends Component {
 	}
 	
 	render() {
-		const {temperature, humidity, wind, weather} = this.props.children.current;
-		const {cityName} = this.props.children;
+		const {data, toggleLoading, checkCityInput, updateDataArray} = this.props.children;
+		const {cityName, current} = data;
+		const {temperature, humidity, wind, weather} = current;
+
+		const {countryCode} = this.state;
+		const {onCountryChange} = this;
+
 		return (
 			<div className = 'Current'>
-				<Country 	country = {this.state.countryCode}
-							onCountryChange = {this.onCountryChange}
+				<Country 	country = {countryCode}
+							onCountryChange = {onCountryChange}
 				/>
 				<CurrentInfo    temperature = {temperature}
 								humidity = {humidity}
@@ -60,11 +65,10 @@ class Current extends Component {
 								weather = {weather}		
 				/>
 				<CurrentCity 	city = {cityName}
-								country = {this.state.countryCode}
-								checkCityInput = {this.props.checkCityInput}
-								toggleLoading = {this.props.toggleLoading}
-								updateDataArray ={this.props.updateDataArray}
-								onCityChange = {this.props.onCityChange}
+								country = {countryCode}
+								checkCityInput = {checkCityInput}
+								toggleLoading = {toggleLoading}
+								updateDataArray ={updateDataArray}
 				/>
 				<div className = 'CurrentBottom'></div>
 			</div>
