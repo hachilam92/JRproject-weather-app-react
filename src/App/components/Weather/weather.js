@@ -18,6 +18,7 @@ data
 	- countryCode 
 */
 
+
 class Weather extends Component {
 	constructor (props) {
 		super(props);
@@ -71,8 +72,7 @@ class Weather extends Component {
 	}
 
 	onOtherCitiesClick(index) {
-		const dataArrayIndex = index + 1;
-		this.updateDataArray(undefined, dataArrayIndex);
+		this.updateDataArray(undefined, index + 1);
 	}
 
 	async initialRequest () {
