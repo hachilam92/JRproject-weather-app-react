@@ -1,4 +1,4 @@
-import Weather from './weather-class';
+import {Weather, Forecast} from './weather-class';
 
 const axios = require('axios');
 
@@ -43,11 +43,9 @@ function getWeather (cc, city) {
 
 function filterRawForecast (rawForecast) {
     let filteredForecast = [];
-    rawForecast.forEach((item, index) => {
-        if (index % 8 === 0) {
-            filteredForecast.push(item);
-        }
-    });
+    for(let i = 0; i < rawForecast.length; i += 8) {
+        filteredForecast.push(rawForecast[i]);
+    }
     return filteredForecast;
 }
 
@@ -59,12 +57,7 @@ function formatForecast (filteredForecast, days = 5) {
 
 	for (let i = 0; i < days; i++) {
 		currentIndex = (currentIndex === dayList.length -1)? 0 : currentIndex + 1;
-		formattedForecast.push({
-			day : dayList[currentIndex],
-			temperature : Math.round(filteredForecast[i].temperature),
-            icon : filteredForecast[i].icon,
-            description : filteredForecast[i].description
-		});
+        formattedForecast.push(new Forecast(filteredForecast[i], dayList[currentIndex]));
 	}
 	return formattedForecast;
 }
