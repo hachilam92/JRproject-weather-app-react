@@ -11,9 +11,14 @@ function WeatherBottom (props) {
     
     return (
         <div className = 'WeatherBottom'>
-            <OtherCity  cityArray = {cityArray}
-                        onOtherCitiesClick = {onOtherCitiesClick} 
-            />
+            <OtherCity>
+                {
+                    {
+                        cityArray,
+                        onOtherCitiesClick
+                    }    
+                }
+            </OtherCity>
             <div className = 'division'></div>
             <ForecastWeather forecastArray = {forecastArray}/>
         </div>
