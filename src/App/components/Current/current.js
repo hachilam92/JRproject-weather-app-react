@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Component} from 'react';
 import './current.scss';
 import {getCode, getName} from 'country-list';

@@ -1,83 +1,58 @@
-import React from 'react';
-import {Component} from 'react';
+import React, {useState} from 'react';
 import './country.scss';
 
-class Country extends Component {
-    constructor(props) {
-        super(props);
-        this.defaultValue = 'country or code';
-        this.state = {
-            countryValue : this.defaultValue,
-            hideInput : true
-        };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleBlur = this.handleBlur.bind(this);
-        this.handleFocus = this.handleFocus.bind(this);
-        this.toggleInput = this.toggleInput.bind(this);
-    }
-
-    toggleInput() {
-        this.setState({
-            hideInput : !this.state.hideInput,
-            countryValue: this.defaultValue
-        });
-    }
-
-    updateDisplay(inputValue) {
-		this.setState({
-			countryValue: inputValue
-		});
-    }
+function Country(props) {
+    const defaultValue = 'country or code';
+    const [hide, setHide] = useState(true); 
+    const [country, setCountry] = useState(defaultValue);
     
-    handleChange(e) {
-        this.updateDisplay(e.target.value);
+    const toggleInput = () => {
+        setHide(!hide);
+        setCountry(defaultValue);    
     }
 
-    handleSubmit(e) {
+    const handleChange = (e) => {
+        setCountry(e.target.value);
+    }
+
+    const handleFocus = () => {
+        if (country === defaultValue) {
+			setCountry('');
+		}
+    }
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-        this.props.onCountryChange(this.state.countryValue);
-        this.toggleInput();
+        props.onCountryChange(country);
+        toggleInput();
     }
 
-    handleFocus(e) {
-		if (this.state.countryValue === this.defaultValue) {
-			this.updateDisplay('');
-		}	
-	}
+    const handleBlur = (e) => {
+        return (country === '')? toggleInput() : handleSubmit(e);
+    }
 
-	handleBlur(e) {
-        return (this.state.countryValue === '')? this.toggleInput() : this.handleSubmit(e);
-	}
-
-    render() {
-        const {countryValue, hideInput} = this.state;
-        const {toggleInput, handleChange, handleSubmit, handleFocus, handleBlur} = this;
-        const {country} = this.props;
-
-        return (
-            <div className = 'Country'>
-                <div    className = 'Country__name'
-                        onClick = {toggleInput}
-                >
-                    {country}
-                </div>
-                {hideInput?
-                    ''
-                :
-                    <form   className = 'Country__form'
-                            onSubmit = {handleSubmit}
-                    >
-                        <input  value = {countryValue}
-                                onChange = {handleChange}
-                                onBlur = {handleBlur}
-                                onFocus = {handleFocus}
-                        />
-                    </form> 
-                }   
+    return (
+        <div className = 'Country'>
+            <div    className = 'Country__name'
+                    onClick = {toggleInput}
+            >
+                {props.country}
             </div>
-        );
-    }
+            {hide?
+                ''
+            :
+                <form   className = 'Country__form'
+                        onSubmit = {handleSubmit}
+                >
+                    <input  value = {country}
+                            onChange = {handleChange}
+                            onBlur = {handleBlur}
+                            onFocus = {handleFocus}
+                    />
+                </form> 
+            }   
+        </div>
+    );
 }
 
 export default Country;
