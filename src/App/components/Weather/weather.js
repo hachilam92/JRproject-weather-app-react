@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect, useReducer} from 'react';
 import './weather.scss';
 import Current from '../Current/current';
 import WeatherBottom from '../WeatherBottom/weather-bottom';
@@ -18,123 +18,131 @@ data
 	- countryCode 
 */
 
-
-class Weather extends Component {
-	constructor (props) {
-		super(props);
-		this.state ={
-			loading : true,
-			dataArray: []
-		};
-		this.defaultCountry = 'AU';
-		this.defaultCity = ['Melbourne', 'Sydney', 'Brisbane', 'Perth'];
-		this.onOtherCitiesClick = this.onOtherCitiesClick.bind(this);
-		this.toggleLoading = this.toggleLoading.bind(this);
-		this.checkCityInput =this.checkCityInput.bind(this);
-		this.updateDataArray = this.updateDataArray.bind(this);
+function Weather() {
+	const [loading, setLoading] = useState(true);
+	const [dataArray, dispatch] = useReducer(updateArray, []);
+	
+	function updateArray(dataArray, action) {
+		const newDataArray = dataArray.map((city) => city);
+		let currentData;
+		switch(action.type) {
+			case 'New_Array':
+				return action.array;
+			case 'New_DATA':
+				currentData  = action.data;
+				newDataArray.pop();
+				break;
+			case 'SWITCH':
+				currentData = newDataArray.splice(action.index, 1)[0];
+				break;
+			default:
+				throw new Error();
+		}
+		newDataArray.unshift(currentData);	
+		return newDataArray;
+	}
+	
+	function newData(data) {
+		dispatch({
+			type: 'New_DATA',
+			data: data, 
+		});
 	}
 
-	toggleLoading(booleanValue) {
-		this.setState(
-			{loading: booleanValue}
-		);
+	function reorderArray(index) {
+		dispatch({
+			type: 'SWITCH',
+			index: index, 
+		});
 	}
 
-	setDataArray(newDataArray) {
-		this.setState(
-			{dataArray: newDataArray}
-		);
+	function newArray(array) {
+		dispatch({
+			type: 'New_Array',
+			array: array, 
+		});
 	}
 
-	checkCityInput(inputCity, inputCountry) {
-		const index = this.state.dataArray.findIndex((data) => {
+
+	async function initialRequest () {
+		const defaultCities = ['Melbourne', 'Sydney', 'Brisbane', 'Perth'];
+		const defaultCountry = 'AU';
+		const dataArray = [];
+		for(let i = 0; i < defaultCities.length; i++) {
+			let city = defaultCities[i];
+			let cityData = await getWeather(defaultCountry, city);
+			dataArray.push(cityData);
+		}
+		newArray(dataArray);
+		setLoading(false);
+	};
+
+	useEffect(
+		() => {
+			initialRequest();
+		},
+		[]
+	);
+
+	function onOtherCitiesClick(buttonIndex) {
+		const arrayIndex = buttonIndex + 1;
+		reorderArray(arrayIndex);
+	}
+
+	function checkCityInput (inputCity, inputCountry) {
+		const arrayIndex = dataArray.findIndex((data) => {
 			return (data.cityName.toUpperCase() === inputCity.toUpperCase()) &&
 					(data.countryCode === inputCountry);
 		});
-		if(index > 0 ) {
-			this.onOtherCitiesClick(index - 1);
+		if(arrayIndex > 0 ) {
+			const buttonIndex = arrayIndex - 1;
+			onOtherCitiesClick(buttonIndex);
 			return false;
 		}else{
-			return (index === 0)? false : true;
+			return (arrayIndex === 0)? false : true;
 		}
 	}
 
-	//write new data: only pass in 'newData'
-	//switch element order: only pass in 'index', switch position with the first element  
-	updateDataArray(newData, index = null) {
-		const newDataArray = this.state.dataArray.map((city) => city);
-		const currentData = (index)? newDataArray.splice(index, 1)[0] : newData;
-		newDataArray.unshift(currentData);
-		if(newData){
-			newDataArray.pop();
-		}
-		this.setDataArray(newDataArray);
-	}
 
-	onOtherCitiesClick(index) {
-		this.updateDataArray(undefined, index + 1);
-	}
+	const loadingStyle = {
+		borderRadius : '32px',
+	};
+	const currentData = dataArray[0];
 
-	async initialRequest () {
-		this.toggleLoading(true);
-		const cityNameList = this.defaultCity;
-		const countryCode = this.defaultCountry;
-		const dataArray = [];
-		for(let i = 0; i < cityNameList.length; i++) {
-			let city = cityNameList[i];
-			let cityData = await getWeather(countryCode, city);
-			dataArray.push(cityData);
-		}
-		this.setDataArray(dataArray);
-		this.toggleLoading(false);
-	}
-
-	componentDidMount() {
-		this.initialRequest();
-	}
-
-	render () {
-		const loadingStyle = {
-			borderRadius : '32px',
-		};
-		const {loading, dataArray} = this.state;
-		const data = dataArray[0];
-		const {toggleLoading, checkCityInput, updateDataArray, onOtherCitiesClick} = this;
-	
-		return (
-			<div className = 'Weather'>
-				{loading?
-					<div className = 'Current' style = {loadingStyle}>
-						<div className = 'loading'>
-							Loading...
-						</div>
+	return (
+		<div className = 'Weather'>
+			{loading?
+				<div className = 'Current' style = {loadingStyle}>
+					<div className = 'loading'>
+						Loading...
 					</div>
-				:
-					<>
-						<Current>
+				</div>
+			:
+				<>
+					<Current>
+						{
 							{
-								{
-									data,
-									toggleLoading,
-									checkCityInput,
-									updateDataArray
-								}
+								currentData,
+								setLoading,
+								checkCityInput,
+								updateDataArray: newData
 							}
-						</Current>
-						<WeatherBottom>
+						}
+					</Current>
+					<WeatherBottom>
+						{
 							{
-								{
-									dataArray,
-									onOtherCitiesClick
-								}
-								
+								dataArray,
+								onOtherCitiesClick
 							}
-						</WeatherBottom>
-					</>
-				}
-			</div>
-		);
-	}
+							
+						}
+					</WeatherBottom>
+				</>
+			}
+		</div>
+	);
 }
+
 
 export default Weather;

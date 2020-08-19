@@ -6,28 +6,28 @@ function CurrentCity(props) {
 	const defaultValue = 'Which city?';
 	const [city, setCity] = useState(defaultValue);
 
-	const handleChange = (e) => {
+	function handleChange(e) {
 		setCity(e.target.value);
 	}; 
 
-	const handleFocus = () => {
+	function handleFocus () {
 		if (city === defaultValue) {
 			setCity('');
 		}	
 	};
 
-	const updateData = async (inputCity) => {
-		props.toggleLoading(true);
+	async function updateData(inputCity) {
+		props.setLoading(true);
 		const newData = await getWeather(props.country, inputCity);
 		if(newData === undefined) {
-			props.toggleLoading(false);
+			props.setLoading(false);
 			return alert('country or city can not found');
 		}
 		props.updateDataArray(newData);
-		props.toggleLoading(false);
+		props.setLoading(false);
 	}
 
-	const handleSubmit = (e) => {
+	function handleSubmit(e) {
 		e.preventDefault();
 		const validate = props.checkCityInput(city, props.country);
 		if(validate) {
@@ -36,7 +36,7 @@ function CurrentCity(props) {
 		setCity(defaultValue);
 	}
 
-	const handleBlur = (e) => {
+	function handleBlur (e){
 		return (city === '') && setCity(defaultValue);
 	}
 

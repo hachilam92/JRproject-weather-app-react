@@ -7,7 +7,7 @@ import CurrentInfo from './Info/info';
 
 
 function Current(props) {
-	const defaultValue = props.children.data.countryCode;
+	const defaultValue = props.children.currentData.countryCode;
 	const [countryCode, setCountryCode] = useState(defaultValue);
 
 	useEffect(
@@ -17,7 +17,7 @@ function Current(props) {
 		[defaultValue]
 	);
 
-	const getCountryCode = (inputCountry) => {
+	function getCountryCode (inputCountry) {
 		const countryCodeLength = 2;
 		const validatedInput = getCode(inputCountry) || getName(inputCountry);
 		if(validatedInput){
@@ -26,15 +26,15 @@ function Current(props) {
 		return false;
 	}
 
-	const onCountryChange = (inputCountry) => {
+	function onCountryChange (inputCountry) {
 		const inputCode = getCountryCode(inputCountry);
 		return inputCode && setCountryCode(inputCode.toUpperCase());
 	}
 
-	const {data, toggleLoading, checkCityInput, updateDataArray} = props.children;
-	const {cityName, current} = data;
+	const {currentData, setLoading, checkCityInput, updateDataArray} = props.children;
+	const {cityName, current} = currentData;
 	const {temperature, humidity, wind, weather} = current;
-	
+
 	return (
 		<div className = 'Current'>
 			<Country 	country = {countryCode}
@@ -48,7 +48,7 @@ function Current(props) {
 			<CurrentCity 	city = {cityName}
 							country = {countryCode}
 							checkCityInput = {checkCityInput}
-							toggleLoading = {toggleLoading}
+							setLoading = {setLoading}
 							updateDataArray ={updateDataArray}
 			/>
 			<div className = 'CurrentBottom'></div>

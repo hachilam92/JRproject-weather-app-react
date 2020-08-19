@@ -6,28 +6,28 @@ function Country(props) {
     const [hide, setHide] = useState(true); 
     const [country, setCountry] = useState(defaultValue);
     
-    const toggleInput = () => {
+    function toggleInput() {
         setHide(!hide);
         setCountry(defaultValue);    
     }
 
-    const handleChange = (e) => {
+    function handleChange(e) {
         setCountry(e.target.value);
     }
 
-    const handleFocus = () => {
+    function handleFocus() {
         if (country === defaultValue) {
 			setCountry('');
 		}
     }
 
-    const handleSubmit = (e) => {
+    function handleSubmit(e) {
         e.preventDefault();
         props.onCountryChange(country);
         toggleInput();
     }
 
-    const handleBlur = (e) => {
+    function handleBlur(e) {
         return (country === '')? toggleInput() : handleSubmit(e);
     }
 
