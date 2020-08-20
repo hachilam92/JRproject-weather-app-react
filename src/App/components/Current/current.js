@@ -37,19 +37,22 @@ function Current(props) {
 
 	return (
 		<div className = 'Current'>
-			<Country 	country = {countryCode}
-						onCountryChange = {onCountryChange}
+			<Country 	
+				country = {countryCode}
+				onCountryChange = {onCountryChange}
 			/>
-			<CurrentInfo    temperature = {temperature}
-							humidity = {humidity}
-							wind = {wind}
-							weather = {weather}		
+			<CurrentInfo    
+				temperature = {temperature}
+				humidity = {humidity}
+				wind = {wind}
+				weather = {weather}		
 			/>
-			<CurrentCity 	city = {cityName}
-							country = {countryCode}
-							checkCityInput = {checkCityInput}
-							setLoading = {setLoading}
-							updateDataArray ={updateDataArray}
+			<CurrentCity 	
+				city = {cityName}
+				country = {countryCode}
+				checkCityInput = {checkCityInput}
+				setLoading = {setLoading}
+				updateDataArray ={updateDataArray}
 			/>
 			<div className = 'CurrentBottom'></div>
 		</div>
